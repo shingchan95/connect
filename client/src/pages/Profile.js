@@ -7,7 +7,7 @@ import Auth from '../utils/auth';
 import PostForm from '../components/PostForm';
 import PostList from '../components/PostList';
 import FriendList from '../components/FriendList';
-
+import '../styles/profile.css';
 
 const Profile = () => {
   const { username: userParam } = useParams();
@@ -86,6 +86,7 @@ const Profile = () => {
 
   return (
     <>
+    <div>
       <div>
           <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
             {`${user.username}'s`} profile.
@@ -93,11 +94,8 @@ const Profile = () => {
       </div>
       {Auth.getProfile().data.username !== user.username && (
       <div>
-
-        <div>
-
         {filteredName.length===0 ? 
-         <div>
+          <div>
             <button className="btn btn-lg btn-light m-2" onClick={()=>{handleAddFriend();handleFilter()}}>
                 Connect User
             </button>
@@ -108,38 +106,33 @@ const Profile = () => {
                     Connected
             </button>
         </div>  
-        
         }
-        
-        </div>
-        
-        
-       
       </div>
       )}
       
       <div>
-        <FriendList users={friendlist} />
-      </div>
-      
-      <div>
         Contact Email: {user.email}
       </div>
-      {Auth.getProfile().data.username === user.username && (
-        <div>
-          <PostForm />
-        </div>
-        )}
-
-      <div className="col-12 col-md-10 mb-5">
-        <PostList
-          posts={user.posts}
-          title={`${user.username}'s posts...`}
-          username={user.username}
-          showTitle={false}
-          showUsername={false}
-        />
+      <div>
+        <FriendList users={friendlist} />
       </div>
+        <div className='profilePost'> 
+        {Auth.getProfile().data.username === user.username && (
+          <div>
+            <PostForm />
+          </div>
+          )}
+          <div className="col-12 col-md-10 mb-5">
+            <PostList
+              posts={user.posts}
+              title={`${user.username}'s posts...`}
+              username={user.username}
+              showTitle={false}
+              showUsername={false}
+              />
+          </div>
+        </div>
+    </div>
     </>
   );
 };
